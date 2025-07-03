@@ -10,6 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon, CreditCard, Users, Clock, MapPin } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from '@/components/ui/sonner';
+import { useAuth } from '@/hooks/useAuth';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, destinatio
   const [guests, setGuests] = useState('1');
   const [specialRequests, setSpecialRequests] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
 
   const [paymentData, setPaymentData] = useState({
     cardNumber: '',
@@ -56,10 +58,56 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, destinatio
     
     // Simulate payment processing
     setTimeout(() => {
+      // Save booking to localStorage
+      const booking = {
+        id: `SITH-${Date.now()}`,
+        destinationName: destination?.name,
+        destinationImage: destination?.image,
+        bookedBy: user?.user_metadata?.full_name || 'Sith Traveler',
+        email: user?.email || '',
+        numberOfPeople: parseInt(guests),
+        checkInDate: checkIn?.toISOString().split('T')[0],
+        checkOutDate: checkOut?.toISOString().split('T')[0],
+        amountPaid: calculateTotal(),
+        currency: 'Imperial Credits',
+        bookingDate: new Date().toISOString().split('T')[0],
+        status: 'upcoming',
+        specialRequests: specialRequests || undefined
+      };
+
+      // Get existing bookings
+      const existingBookings = localStorage.getItem('user-bookings');
+      let bookings = [];
+      
+      if (existingBookings) {
+        try {
+          bookings = JSON.parse(existingBookings);
+        } catch (error) {
+          bookings = [];
+        }
+      }
+
+      // Add new booking
+      bookings.push(booking);
+      localStorage.setItem('user-bookings', JSON.stringify(bookings));
+
       toast.success('Payment successful! Your dark journey awaits.');
       setIsLoading(false);
       onClose();
       setStep(1);
+      
+      // Reset form
+      setCheckIn(undefined);
+      setCheckOut(undefined);
+      setGuests('1');
+      setSpecialRequests('');
+      setPaymentData({
+        cardNumber: '',
+        expiryDate: '',
+        cvv: '',
+        cardholderName: '',
+        billingAddress: ''
+      });
     }, 3000);
   };
 

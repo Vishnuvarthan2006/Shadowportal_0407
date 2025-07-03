@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, MapPin, Shield, Zap, Star, Crown, Swords, Moon, User, LogOut, ExternalLink } from 'lucide-react';
+import { Search, MapPin, Shield, Zap, Star, Crown, Swords, Moon, User, LogOut, ExternalLink, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -195,6 +195,13 @@ const Index = () => {
                         <span className="font-exo">{getUserDisplayName()}</span>
                         <span className="text-xs text-sith-red font-syncopate">{userRank}</span>
                       </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/my-bookings')}
+                      className="text-white hover:bg-sith-gray/50 font-syncopate"
+                    >
+                      <Calendar className="mr-2 h-4 w-4" />
+                      <span>MY BOOKINGS</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => navigate('/subscription-tiers')}

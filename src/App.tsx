@@ -8,6 +8,7 @@ import AllDestinations from "./pages/AllDestinations";
 import SubscriptionTiers from "./pages/SubscriptionTiers";
 import PaymentPortal from "./pages/PaymentPortal";
 import AuthCallback from "./pages/AuthCallback";
+import MyBookings from "./pages/MyBookings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/subscription-tiers" element={<SubscriptionTiers />} />
           <Route path="/payment-portal" element={<PaymentPortal />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
