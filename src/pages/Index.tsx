@@ -153,7 +153,6 @@ const Index = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <h1 className="text-2xl font-bold sith-text-glow title-font">SHADOWPORTALS</h1>
-              <span className="text-sith-red text-sm font-medium font-syncopate">THE GALAXY'S DARK ELITE</span>
             </div>
             <div className="flex items-center space-x-6">
               <a href="#destinations" className="hover:text-sith-red transition-colors font-medium font-syncopate">DESTINATIONS</a>
